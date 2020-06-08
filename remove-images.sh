@@ -1,0 +1,1 @@
+docker image rm $(docker images -a -q)

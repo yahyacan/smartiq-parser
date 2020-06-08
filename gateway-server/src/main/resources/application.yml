@@ -1,0 +1,36 @@
+server:
+  port: ${SERVER_PORT:8088}
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: arabamcom-parser
+          uri: lb://ARABAMCOM-PARSER
+          predicates:
+            - Path=/arabamcom/**
+          filters:
+            - RewritePath=/(?<segment>.*), /$\{segment}
+
+        - id: dod-parser
+          uri: lb://DOD-PARSER
+          predicates:
+            - Path=/dod/**
+          filters:
+            - RewritePath=/(?<segment>.*), /$\{segment}
+
+        - id: sahibinden-parser
+          uri: lb://SAHIBINDEN-PARSER
+          predicates:
+            - Path=/sahibinden/**
+          filters:
+            - RewritePath=/(?<segment>.*), /$\{segment}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8500}/eureka/
+    register-with-eureka: false

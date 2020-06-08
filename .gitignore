@@ -1,0 +1,7 @@
+# Project exclude paths
+/arabamcom-parser/target/
+/config-server/target/
+/dod-parser/target/
+/eureka-server/target/
+/gateway-server/target/
+/sahibinden-parser/target/

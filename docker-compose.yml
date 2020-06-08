@@ -1,0 +1,89 @@
+version: '3.1'
+
+networks:
+  smartiqparser:
+    driver: bridge
+
+services:
+  # DB and Queue -----------------------
+  mysql:
+    image: mysql
+    container_name: smartiqparser-mysql-server
+    restart: always
+    networks:
+      - smartiqparser
+    environment:
+      MYSQL_ROOT_PASSWORD: a12345
+    ports:
+      - '3306:3306'
+
+  # System Services -----------------------
+  smartiqparser-config-server:
+    image: config-server:0.0.1
+    container_name: smartiqparser-config-server
+    restart: always
+    networks:
+      - smartiqparser
+    environment:
+      SERVER_PORT: 8888
+    ports:
+      - '8888:8888'
+
+  smartiqparser-eureka-server:
+    image: eureka-server:0.0.1
+    container_name: smartiqparser-eureka-server
+    restart: always
+    networks:
+      - smartiqparser
+    environment:
+      CONFIG_SERVER_URL: http://smartiqparser-config-server:8888
+      SERVER_PORT: 8500
+    ports:
+      - '8500:8500'
+
+  smartiqparser-gateway-server:
+    image: gateway-server:0.0.1
+    container_name: smartiqparser-gateway-server
+    restart: always
+    networks:
+      - smartiqparser
+    environment:
+      EUREKA_SERVICE_URL: http://smartiqparser-eureka-server:8888
+      SERVER_PORT: 8885
+    ports:
+      - '8885:8885'
+
+  # Local Services -----------------------
+
+  smartiqparser-sahibinden-parser:
+    image: sahibinden-parser:0.0.1
+    container_name: smartiqparser-sahibinden-parser
+    restart: always
+    networks:
+      - smartiqparser
+    environment:
+      CONFIG_SERVER_URL: http://smartiqparser-config-server:8888
+    ports:
+      - '8503:8503'
+
+  smartiqparser-arabamcom-parser:
+    image: arabamcom-parser:0.0.1
+    container_name: smartiqparser-arabamcom-parser
+    restart: always
+    networks:
+      - smartiqparser
+    environment:
+      CONFIG_SERVER_URL: http://smartiqparser-config-server:8888
+    ports:
+      - '8501:8501'
+
+  smartiqparser-dod-parser:
+    image: dod-parser:0.0.1
+    container_name: smartiqparser-dod-parser
+    restart: always
+    networks:
+      - smartiqparser
+    environment:
+      CONFIG_SERVER_URL: http://smartiqparser-config-server:8888
+    ports:
+      - '8502:8502'
