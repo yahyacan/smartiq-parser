@@ -62,7 +62,9 @@ services:
     networks:
       - smartiqparser
     environment:
+      EUREKA_SERVER_URL: http://smartiqparser-eureka-server:8500
       CONFIG_SERVER_URL: http://smartiqparser-config-server:8888
+      MYSQL_URL: jdbc:mysql://mysql:3306/smartiqparser?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
     ports:
       - '8503:8503'
 
@@ -73,7 +75,9 @@ services:
     networks:
       - smartiqparser
     environment:
+      EUREKA_SERVER_URL: http://smartiqparser-eureka-server:8500
       CONFIG_SERVER_URL: http://smartiqparser-config-server:8888
+      MYSQL_URL: jdbc:mysql://mysql:3306/smartiqparser?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
     ports:
       - '8501:8501'
 
@@ -84,6 +88,8 @@ services:
     networks:
       - smartiqparser
     environment:
+      EUREKA_SERVER_URL: http://smartiqparser-eureka-server:8500
       CONFIG_SERVER_URL: http://smartiqparser-config-server:8888
+      MYSQL_URL: jdbc:mysql://mysql:3306/smartiqparser?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
     ports:
       - '8502:8502'

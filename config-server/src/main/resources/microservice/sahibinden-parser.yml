@@ -5,7 +5,7 @@ spring:
   application:
     name: sahibinden-parser
   datasource:
-    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/smartiqparser}
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/smartiqparser?autoReconnect=true&useSSL=false}
     username: ${MYSQL_URL:root}
     password: ${MYSQL_URL:a12345}
   jpa:
